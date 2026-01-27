@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>幻映星球 - 全能视频解析工具</title>
+    <meta name="description" content="幻映星球，支持多平台视频解析、多接口切换，一键粘贴播放，高清4K观影体验，纯免费无广告！">
+    <meta name="keywords" content="幻映星球,视频解析,腾讯视频解析,爱奇艺解析,B站解析,免费视频解析">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            tap-highlight-color: transparent;
+        }
+        html {
+            scroll-behavior: smooth;
+            width: 100%;
+            height: 100%;
+        }
+        body {
+            width: 100%;
+            min-height: 100vh;
+            font-family: 'SF Pro Display', '微软雅黑', sans-serif;
+            background: linear-gradient(135deg, #6a9eff, #e6f0ff, #d8b4fe);
+            background-image: 
+                radial-gradient(circle at 25% 35%, rgba(59, 130, 246, 0.7) 0%, transparent 40%),
+                radial-gradient(circle at 75% 65%, rgba(139, 92, 246, 0.6) 0%, transparent 40%),
+                radial-gradient(circle at 50% 90%, rgba(56, 178, 172, 0.5) 0%, transparent 35%);
+            background-attachment: fixed;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 15px;
+            overflow-x: hidden;
+        }
+        :root {
+            --radius-xl: 24px;
+            --radius-lg: 18px;
+            --radius-md: 16px;
+            --radius-sm: 12px;
+            --radius-xs: 8px;
+            --glass-bg: rgba(255, 255, 255, 0.3);
+            --glass-border: rgba(255, 255, 255, 0.25);
+            --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            --glass-blur: blur(70px);
+            --glass-hover-bg: rgba(255, 255, 255, 0.38);
+            --glass-hover-blur: blur(80px);
+            --glass-hover-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.45);
+            --text-primary: #0f172a;
+            --text-secondary: #1e293b;
+            --text-tertiary: #334155;
+            --btn-primary-gradient: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            --btn-secondary-bg: rgba(255, 255, 255, 0.25);
+            --text-gradient: linear-gradient(135deg, #3b82f6, #8b5cf6, #38b2ac, #4ade80);
+            --card-gradient: linear-gradient(135deg, rgba(255,255,255,0.4), rgba(255,255,255,0.1));
+        }
+        .page-container {
+            width: 100%;
+            max-width: 1200px;
+            background: var(--glass-bg);
+            border-radius: var(--radius-xl);
+            padding: 30px 20px;
+            box-shadow: var(--glass-shadow);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+        }
+        .page-container:hover {
+            box-shadow: var(--glass-hover-shadow);
+        }
+        .hero-area {
+            text-align: center;
+            padding: 40px 20px;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 1;
+        }
+        .main-title {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 16px;
+            background: var(--text-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 1px;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+        .hero-desc {
+            font-size: 18px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            font-weight: 500;
+        }
+        .go-use-btn {
+            display: inline-block;
+            padding: 16px 40px;
+            background: var(--btn-primary-gradient);
+            color: #fff;
+            text-decoration: none;
+            border-radius: var(--radius-md);
+            font-size: 18px;
+            font-weight: 600;
+            border: 1px solid rgba(255,255,255,0.3);
+            box-shadow: var(--glass-shadow);
+            transition: all 0.3s ease;
+        }
+        .go-use-btn:hover {
+            box-shadow: var(--glass-hover-shadow);
+            transform: translateY(-3px);
+            border-color: rgba(255,255,255,0.5);
+        }
+        .section {
+            margin-bottom: 60px;
+            position: relative;
+            z-index: 1;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 40px;
+            background: var(--text-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .feature-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+        .feature-card {
+            background: var(--card-gradient);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            padding: 30px 24px;
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        .feature-card:hover {
+            background: var(--glass-hover-bg);
+            box-shadow: var(--glass-hover-shadow);
+            transform: translateY(-5px);
+        }
+        .feature-icon {
+            font-size: 36px;
+            margin-bottom: 20px;
+            background: var(--text-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .feature-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+        .feature-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        .step-list {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        .step-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            background: var(--glass-bg);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
+            backdrop-filter: var(--glass-blur);
+            padding: 24px;
+            transition: all 0.3s ease;
+        }
+        .step-item:hover {
+            box-shadow: var(--glass-hover-shadow);
+        }
+        .step-num {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--btn-primary-gradient);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 700;
+            flex-shrink: 0;
+            margin-top: 4px;
+        }
+        .step-content {
+            flex: 1;
+        }
+        .step-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+        .step-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        .platform-area {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .platform-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        .platform-card {
+            width: 100px;
+            height: 100px;
+            border-radius: var(--radius-lg);
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
+            backdrop-filter: var(--glass-blur);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        .platform-card:hover {
+            background: var(--glass-hover-bg);
+            box-shadow: var(--glass-hover-shadow);
+            transform: scale(1.05);
+        }
+        .platform-icon {
+            font-size: 32px;
+            color: #3b82f6;
+        }
+        .platform-name {
+            font-size: 14px;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+        .faq-list {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .faq-item {
+            background: var(--glass-bg);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
+            backdrop-filter: var(--glass-blur);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .faq-item:hover {
+            box-shadow: var(--glass-hover-shadow);
+        }
+        .faq-question {
+            padding: 20px 24px;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+        .faq-answer {
+            padding: 0 24px 20px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            display: none;
+        }
+        .faq-answer.show {
+            display: block;
+        }
+        .faq-arrow {
+            font-size: 20px;
+            color: var(--text-tertiary);
+            transition: transform 0.3s ease;
+        }
+        .faq-arrow.rotate {
+            transform: rotate(180deg);
+        }
+        .footer {
+            text-align: center;
+            padding: 30px 20px;
+            color: var(--text-tertiary);
+            font-size: 14px;
+            line-height: 1.8;
+            border-top: 1px solid var(--glass-border);
+            margin-top: 40px;
+        }
+        .footer a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        .copyright {
+            margin-top: 20px;
+            font-size: 12px;
+        }
+        @media screen and (max-width:767px) {
+            .main-title {
+                font-size: 32px;
+            }
+            .hero-desc {
+                font-size: 16px;
+                padding: 0 10px;
+            }
+            .section-title {
+                font-size: 24px;
+            }
+            .hero-area {
+                padding: 20px 10px;
+                margin-bottom: 20px;
+            }
+            .section {
+                margin-bottom: 40px;
+            }
+            .feature-list {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            .feature-card {
+                padding: 20px 16px;
+            }
+            .step-item {
+                flex-direction: column;
+                gap: 12px;
+                padding: 20px;
+            }
+            .step-num {
+                margin-top: 0;
+            }
+            .platform-card {
+                width: 80px;
+                height: 80px;
+            }
+            .platform-list {
+                gap: 15px;
+            }
+            .go-use-btn {
+                padding: 14px 30px;
+                font-size: 16px;
+            }
+        }
+        @media screen and (min-width:768px) and (max-width:1023px) {
+            .main-title {
+                font-size: 40px;
+            }
+            .feature-list {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <!-- 头部英雄区 -->
+        <div class="hero-area">
+            <h1 class="main-title">幻映星球</h1>
+            <p class="hero-desc">
+                全能多平台视频解析工具，支持多接口自由切换，一键粘贴播放，高清4K观影体验<br>
+                免安装、纯免费、无广告，随时随地畅享精彩影视内容
+            </p>
+            <a href="https://ming329.me" class="go-use-btn" target="_blank">立即使用</a>
+        </div>
+
+        <!-- 核心功能区 -->
+        <div class="section">
+            <h2 class="section-title">核心功能</h2>
+            <div class="feature-list">
+                <div class="feature-card">
+                    <div class="feature-icon">🔗</div>
+                    <h3 class="feature-title">多接口智能解析</h3>
+                    <p class="feature-desc">内置多款优质解析接口，解析失败可一键切换，大幅提升解析成功率，轻松应对各类链接</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3 class="feature-title">全端自适应兼容</h3>
+                    <p class="feature-desc">完美适配手机、平板、电脑等所有设备，移动端支持全屏播放，关闭竖排锁即可畅享大屏</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title">一键粘贴播放</h3>
+                    <p class="feature-desc">支持剪贴板一键粘贴视频链接，无需手动输入，点击播放即可快速解析，操作简单高效</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📜</div>
+                    <h3 class="feature-title">播放历史记录</h3>
+                    <p class="feature-desc">自动保存播放历史，支持历史记录播放、复制、删除，方便再次观看，无需重新粘贴链接</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎬</div>
+                    <h3 class="feature-title">多平台全面支持</h3>
+                    <p class="feature-desc">覆盖腾讯、爱奇艺、B站、优酷等主流影视平台，一个工具搞定所有平台视频解析</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">✅</div>
+                    <h3 class="feature-title">纯免费无广告</h3>
+                    <p class="feature-desc">全程无任何广告弹窗，不收取任何费用，无需注册登录，打开即可使用，纯净观影体验</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 使用步骤区 -->
+        <div class="section">
+            <h2 class="section-title">使用步骤</h2>
+            <div class="step-list">
+                <div class="step-item">
+                    <div class="step-num">1</div>
+                    <div class="step-content">
+                        <h3 class="step-title">复制视频链接</h3>
+                        <p class="step-desc">打开各大影视平台，找到想要观看的视频，复制视频的官方播放链接</p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-num">2</div>
+                    <div class="step-content">
+                        <h3 class="step-title">粘贴解析链接</h3>
+                        <p class="step-desc">进入幻映星球解析页，点击「粘贴」按钮，将复制的链接粘贴到输入框，也可手动输入</p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-num">3</div>
+                    <div class="step-content">
+                        <h3 class="step-title">选择接口播放</h3>
+                        <p class="step-desc">选择合适的解析接口，点击「播放影视」按钮，等待解析完成即可开始观看，解析失败可切换接口重试</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 支持平台区 -->
+        <div class="section">
+            <h2 class="section-title">支持平台</h2>
+            <div class="platform-area">
+                <div class="platform-list">
+                    <div class="platform-card">
+                        <div class="platform-icon">📺</div>
+                        <div class="platform-name">腾讯视频</div>
+                    </div>
+                    <div class="platform-card">
+                        <div class="platform-icon">🎥</div>
+                        <div class="platform-name">爱奇艺</div>
+                    </div>
+                    <div class="platform-card">
+                        <div class="platform-icon">📺</div>
+                        <div class="platform-name">优酷</div>
+                    </div>
+                    <div class="platform-card">
+                        <div class="platform-icon">⚡</div>
+                        <div class="platform-name">B站</div>
+                    </div>
+                    <div class="platform-card">
+                        <div class="platform-icon">📻</div>
+                        <div class="platform-name">搜狐视频</div>
+                    </div>
+                    <div class="platform-card">
+                        <div class="platform-icon">📱</div>
+                        <div class="platform-name">咪咕视频</div>
+                    </div>
+                    <div class="platform-card">
+                        <div class="platform-icon">🍉</div>
+                        <div class="platform-name">西瓜视频</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 常见问题区 -->
+        <div class="section">
+            <h2 class="section-title">常见问题</h2>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>为什么解析失败？</span>
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        解析失败大概率是当前接口失效，可尝试切换其他解析接口；同时检查视频链接是否为官方有效播放链接，部分付费独播视频暂不支持解析。
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>手机端无法全屏播放？</span>
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        手机端播放时，需先关闭手机的「竖排方向锁定」功能，点击视频播放界面的全屏按钮，即可实现横屏全屏播放。
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>粘贴按钮无法使用？</span>
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        部分浏览器/手机系统会限制剪贴板权限，可手动将链接复制到输入框；同时确保剪贴板中有有效的视频链接，无内容时粘贴按钮也会提示失败。
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>播放历史怎么删除？</span>
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        在解析页的「历史播放记录」板块，可单条删除历史记录，也可点击「清空全部记录」删除所有历史，记录保存在本地浏览器，不会上传至服务器。
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>是否需要注册登录？</span>
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        幻映星球全程无需注册、无需登录，打开页面即可使用，所有操作均在本地完成，不会收集任何个人信息。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 底部说明 -->
+        <div class="footer">
+            <p>关注公众号：<strong>幻映星球</strong> 获取最新更新与更多功能</p>
+            <p>问题反馈：<a href="mailto:Yalo329@qq.com">Yalo329@qq.com</a></p>
+            <p class="copyright">© 2025 幻映星球 | 本工具仅用于学习交流，请勿用于商业用途，侵权请联系删除</p>
+        </div>
+    </div>
+
+    <script>
+        // FAQ折叠展开交互
+        function toggleFaq(el) {
+            const answer = el.nextElementSibling;
+            const arrow = el.querySelector('.faq-arrow');
+            answer.classList.toggle('show');
+            arrow.classList.toggle('rotate');
+            arrow.textContent = answer.classList.contains('show') ? '▲' : '▼';
+        }
+
+        // 禁用右键（保持与原解析页一致）
+        document.addEventListener("contextmenu", (e) => e.preventDefault());
+    </script>
+</body>
+</html>
