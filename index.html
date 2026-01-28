@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>幻映星球 - 全能多平台视频解析工具_免费无广告</title>
-    <!-- SEO/社交分享优化：新增OG标签，适配微信/QQ分享 -->
     <meta name="description" content="幻映星球-免费全能多平台视频解析工具，支持腾讯/爱奇艺/B站/优酷等平台，多接口切换，一键粘贴播放，高清4K无广告，全端适配免安装！">
     <meta name="keywords" content="幻映星球,视频解析,免费视频解析,腾讯视频解析,爱奇艺解析,B站解析,优酷解析,4K视频解析">
     <meta property="og:title" content="幻映星球 - 全能多平台视频解析工具">
@@ -12,7 +11,6 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://ming329.me"> <!-- 替换为你的官网域名 -->
     <meta property="og:site_name" content="幻映星球">
-    <!-- 引入字体图标+自定义图标 -->
     <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -21,10 +19,10 @@
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
             tap-highlight-color: transparent;
-            cursor: default; /* 全局默认光标，可点击元素单独设置pointer */
+            cursor: default;
         }
         a, button, .faq-question, .nav-item, .hamburger, .back-to-top, .history-item {
-            cursor: pointer; /* 可点击元素统一指针光标 */
+            cursor: pointer;
         }
         html {
             scroll-behavior: smooth;
@@ -51,7 +49,6 @@
             overflow-x: hidden;
             position: relative;
         }
-        /* 新增：页面加载进度条 */
         #loading-bar {
             position: fixed;
             top: 0;
@@ -63,7 +60,6 @@
             width: 0;
             transition: width 0.3s ease;
         }
-        /* 背景装饰圆 */
         body::before, body::after {
             content: '';
             position: fixed;
@@ -87,7 +83,6 @@
             left: -150px;
             background: linear-gradient(135deg, #8b5cf6, transparent);
         }
-        /* 动画定义 */
         @keyframes bgGradient {
             0% {background-position: 0% 0%;}
             100% {background-position: 100% 100%;}
@@ -96,16 +91,15 @@
             0% {opacity: 0;transform: translateY(30px);}
             100% {opacity: 1;transform: translateY(0);}
         }
-        @keyframes ripple { /* 新增：按钮点击波纹 */
+        @keyframes ripple {
             0% {transform: scale(0);opacity: 0.8;}
             100% {transform: scale(5);opacity: 0;}
         }
-        @keyframes shine { /* 新增：微发光动画 */
+        @keyframes shine {
             0% {box-shadow: 0 0 0 0 rgba(255,255,255,0.4), var(--glass-shadow);}
             50% {box-shadow: 0 0 15px 5px rgba(255,255,255,0.2), var(--glass-shadow);}
             100% {box-shadow: 0 0 0 0 rgba(255,255,255,0), var(--glass-shadow);}
         }
-        /* 根变量优化：新增发光、平台阴影变量 */
         :root {
             --radius-xl: 28px;
             --radius-lg: 20px;
@@ -126,10 +120,9 @@
             --btn-primary-light: linear-gradient(90deg, rgba(255,255,255,0.2), rgba(255,255,255,0), rgba(255,255,255,0.2));
             --btn-secondary-bg: rgba(255, 255, 255, 0.3);
             --text-gradient: linear-gradient(135deg, #3b82f6, #6366f1, #8b5cf6, #38b2ac, #4ade80);
-            --text-glow: 0 0 10px rgba(59,130,246,0.2); /* 新增：文字发光 */
+            --text-glow: 0 0 10px rgba(59,130,246,0.2);
             --card-gradient: linear-gradient(135deg, rgba(255,255,255,0.45), rgba(255,255,255,0.15));
-            --card-shine: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 50%, transparent 100%); /* 新增：卡片反光 */
-            /* 平台专属色+阴影 */
+            --card-shine: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 50%, transparent 100%);
             --tx-color: #0088ff;--tx-shadow: 0 0 20px rgba(0,136,255,0.3);
             --iqy-color: #e82001;--iqy-shadow: 0 0 20px rgba(232,32,1,0.3);
             --yk-color: #ff6700;--yk-shadow: 0 0 20px rgba(255,103,0,0.3);
@@ -138,7 +131,6 @@
             --miguvideo-color: #ff3366;--migu-shadow: 0 0 20px rgba(255,51,102,0.3);
             --ixigua-color: #ff6600;--xigua-shadow: 0 0 20px rgba(255,102,0,0.3);
         }
-        /* 新增：顶部导航栏 - 玻璃拟态固定导航 */
         .navbar {
             position: fixed;
             top: 0;
@@ -198,7 +190,6 @@
             background: transparent;
             border: none;
         }
-        /* 新增：移动端导航弹窗 */
         .mobile-nav {
             position: fixed;
             top: 0;
@@ -243,7 +234,6 @@
             background: transparent;
             border: none;
         }
-        /* 主容器优化：增加顶部间距（适配导航）、反光层 */
         .page-container {
             width: 100%;
             max-width: 1200px;
@@ -258,7 +248,7 @@
             overflow: hidden;
             margin: 90px 0 30px;
             transition: all 0.5s ease;
-            background-image: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0)), var(--card-shine); /* 新增反光 */
+            background-image: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0)), var(--card-shine);
             background-size: 100% 100%, 200% 200%;
             animation: shine 8s ease infinite alternate;
         }
@@ -271,7 +261,6 @@
             height: 1px;
             background: linear-gradient(90deg, transparent, var(--glass-border), transparent);
         }
-        /* 英雄区优化：文字发光、间距调整 */
         .hero-area {
             text-align: center;
             padding: 50px 20px 60px;
@@ -288,7 +277,7 @@
             background-clip: text;
             color: transparent;
             letter-spacing: 2px;
-            text-shadow: var(--text-glow); /* 文字发光 */
+            text-shadow: var(--text-glow);
             line-height: 1.2;
         }
         .hero-subtitle {
@@ -307,7 +296,6 @@
             font-weight: 500;
             padding: 0 20px;
         }
-        /* 主按钮优化：增加点击波纹容器 */
         .go-use-btn {
             display: inline-block;
             padding: 18px 48px;
@@ -335,7 +323,7 @@
             background: var(--btn-primary-light);
             transition: left 0.6s ease;
         }
-        .go-use-btn .ripple-container { /* 波纹容器 */
+        .go-use-btn .ripple-container {
             position: absolute;
             top: 0;
             left: 0;
@@ -350,11 +338,10 @@
             border-color: rgba(255,255,255,0.6);
             animation: shine 4s ease infinite alternate;
         }
-        /* 板块标题优化：发光、装饰升级 */
         .section {
             opacity: 0;
             animation: fadeInUp 0.8s ease forwards;
-            scroll-margin-top: 120px; /* 适配导航 */
+            scroll-margin-top: 120px;
             margin-bottom: 80px;
             position: relative;
             z-index: 1;
@@ -392,7 +379,6 @@
             opacity: 0.6;
             box-shadow: 0 0 10px rgba(59,130,246,0.2);
         }
-        /* 功能卡片优化：强化反光、发光 */
         .feature-list {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -452,7 +438,6 @@
             color: var(--text-secondary);
             line-height: 1.8;
         }
-        /* 使用步骤优化：图文结合、步骤图标 */
         .step-list {
             max-width: 900px;
             margin: 0 auto;
@@ -477,7 +462,7 @@
             box-shadow: var(--glass-hover-shadow);
             transform: translateY(-4px);
         }
-        .step-icon { /* 新增：步骤图标 */
+        .step-icon {
             width: 60px;
             height: 60px;
             border-radius: var(--radius-md);
@@ -505,7 +490,6 @@
             color: var(--text-secondary);
             line-height: 1.8;
         }
-        /* 平台卡片优化：专属阴影、hover发光 */
         .platform-area {
             max-width: 900px;
             margin: 0 auto;
@@ -535,7 +519,7 @@
         .platform-card:hover {
             background: var(--glass-hover-bg);
             transform: scale(1.1);
-            box-shadow: var(--glass-hover-shadow), var(--platform-shadow); /* 专属阴影 */
+            box-shadow: var(--glass-hover-shadow), var(--platform-shadow);
         }
         .platform-icon {
             font-size: 36px;
@@ -546,7 +530,6 @@
             font-weight: 600;
             letter-spacing: 0.2px;
         }
-        /* 平台专属样式绑定 */
         .tx {--platform-shadow: var(--tx-shadow);} .tx .platform-icon {color: var(--tx-color);}
         .iqy {--platform-shadow: var(--iqy-shadow);} .iqy .platform-icon {color: var(--iqy-color);}
         .yk {--platform-shadow: var(--yk-shadow);} .yk .platform-icon {color: var(--yk-color);}
@@ -554,7 +537,6 @@
         .sohu {--platform-shadow: var(--sohu-shadow);} .sohu .platform-icon {color: var(--sohu-color);}
         .migu {--platform-shadow: var(--migu-shadow);} .migu .platform-icon {color: var(--miguvideo-color);}
         .xigua {--platform-shadow: var(--xigua-shadow);} .xigua .platform-icon {color: var(--ixigua-color);}
-        /* FAQ优化：默认展开第一个、hover强化 */
         .faq-list {
             max-width: 800px;
             margin: 0 auto;
@@ -610,7 +592,6 @@
         }
         .faq-question:hover .faq-arrow {color: #3b82f6;}
         .faq-arrow.rotate {transform: rotate(180deg);}
-        /* 新增：更新日志板块样式 */
         .log-list {
             max-width: 900px;
             margin: 0 auto;
@@ -643,7 +624,6 @@
             color: var(--text-secondary);
             line-height: 1.7;
         }
-        /* 新增：友情链接板块样式 */
         .link-area {
             max-width: 900px;
             margin: 0 auto;
@@ -671,7 +651,6 @@
             color: #3b82f6;
             box-shadow: var(--glass-shadow);
         }
-        /* 底部优化：新增备案、协议入口，布局调整 */
         .footer {
             text-align: center;
             padding: 40px 20px 20px;
@@ -714,12 +693,6 @@
             font-size: 13px;
             opacity: 0.8;
         }
-        .icp {
-            font-size: 12px;
-            margin-top: 8px;
-            opacity: 0.7;
-        }
-        /* 新增：回到顶部按钮 */
         .back-to-top {
             position: fixed;
             bottom: 30px;
@@ -752,26 +725,22 @@
             color: #3b82f6;
             transform: translateY(-3px);
         }
-        /* 响应式终极优化：适配375px小屏，修复挤压 */
         @media screen and (max-width:767px) {
             body {
                 padding: 0 10px 30px;
             }
             body::before {width: 300px; height: 300px; top: -150px; right: -150px;}
             body::after {width: 250px; height: 250px; bottom: -100px; left: -100px;}
-            /* 导航适配 */
             .nav-menu {display: none;}
             .hamburger {display: block;}
             .navbar {padding: 10px 15px;}
             .navbar.scroll {padding: 6px 15px;}
             .nav-logo {font-size: 20px;}
-            /* 主容器适配 */
             .page-container {
                 padding: 25px 15px;
                 border-radius: var(--radius-lg);
                 margin: 70px 0 20px;
             }
-            /* 英雄区适配 */
             .main-title {
                 font-size: 36px;
                 letter-spacing: 1px;
@@ -793,7 +762,6 @@
                 font-size: 18px;
                 width: 90%;
             }
-            /* 板块适配 */
             .section-title {
                 font-size: 28px;
                 margin-bottom: 36px;
@@ -806,7 +774,6 @@
                 margin-bottom: 60px;
                 scroll-margin-top: 100px;
             }
-            /* 功能卡片适配 */
             .feature-list {
                 grid-template-columns: 1fr;
                 gap: 20px;
@@ -821,7 +788,6 @@
             .feature-title {
                 font-size: 20px;
             }
-            /* 步骤适配：图文改为上下布局 */
             .step-list {
                 gap: 24px;
                 padding: 0;
@@ -840,7 +806,6 @@
             .step-title {
                 font-size: 18px;
             }
-            /* 平台适配 */
             .platform-list {
                 gap: 20px;
                 padding: 0;
@@ -852,7 +817,6 @@
             .platform-icon {
                 font-size: 32px;
             }
-            /* FAQ适配 */
             .faq-list {
                 gap: 16px;
                 padding: 0;
@@ -865,18 +829,15 @@
                 padding: 0 24px 20px;
                 font-size: 14px;
             }
-            /* 日志/链接适配 */
             .log-list, .link-area {padding: 0;}
             .log-item {padding: 16px 20px;}
             .link-item {padding: 6px 12px; font-size: 13px;}
-            /* 底部适配 */
             .footer {
                 font-size: 14px;
                 padding: 30px 10px 15px;
             }
             .footer-links {gap: 12px;}
             .footer-link {font-size: 12px;}
-            /* 回到顶部适配 */
             .back-to-top {
                 width: 44px;
                 height: 44px;
@@ -892,7 +853,6 @@
             .nav-menu {gap: 20px;}
             .nav-item {font-size: 14px;}
         }
-        /* 小屏（375px内）极致适配 */
         @media screen and (max-width:375px) {
             .main-title {font-size: 32px;}
             .hero-desc {font-size: 14px;}
@@ -902,9 +862,7 @@
     </style>
 </head>
 <body>
-    <!-- 新增：页面加载进度条 -->
     <div id="loading-bar"></div>
-    <!-- 新增：顶部导航栏 -->
     <nav class="navbar" id="navbar">
         <a href="#" class="nav-logo">幻映星球</a>
         <div class="nav-menu">
@@ -917,7 +875,6 @@
         </div>
         <button class="hamburger" id="hamburger"><i class="fas fa-bars"></i></button>
     </nav>
-    <!-- 新增：移动端导航弹窗 -->
     <div class="mobile-nav" id="mobileNav">
         <button class="close-nav" id="closeNav"><i class="fas fa-times"></i></button>
         <a href="#feature" class="mobile-nav-item" onclick="closeMobileNav()">核心功能</a>
@@ -926,13 +883,9 @@
         <a href="#faq" class="mobile-nav-item" onclick="closeMobileNav()">常见问题</a>
         <a href="#log" class="mobile-nav-item" onclick="closeMobileNav()">更新日志</a>
         <a href="mailto:Yalo329@qq.com" class="mobile-nav-item" target="_blank" rel="noopener noreferrer">问题反馈</a>
-        <a href="https://wj.qq.com/" class="mobile-nav-item" target="_blank" rel="noopener noreferrer">表单反馈</a>
-        <a href="#privacy" class="mobile-nav-item" onclick="closeMobileNav()">隐私政策</a>
-        <a href="#agreement" class="mobile-nav-item" onclick="closeMobileNav()">用户协议</a>
     </div>
 
     <div class="page-container">
-        <!-- 英雄区 -->
         <div class="hero-area">
             <h1 class="main-title">幻映星球</h1>
             <p class="hero-subtitle">All-in-One Video Parser Tool · 2025 全新版</p>
@@ -946,7 +899,6 @@
             </a>
         </div>
 
-        <!-- 核心功能区 -->
         <div class="section" id="feature">
             <h2 class="section-title">核心功能</h2>
             <div class="feature-list">
@@ -983,7 +935,6 @@
             </div>
         </div>
 
-        <!-- 使用步骤区（图文结合） -->
         <div class="section" id="step">
             <h2 class="section-title">使用步骤</h2>
             <div class="step-list">
@@ -1011,7 +962,6 @@
             </div>
         </div>
 
-        <!-- 支持平台区 -->
         <div class="section" id="platform">
             <h2 class="section-title">支持平台</h2>
             <div class="platform-area">
@@ -1022,12 +972,11 @@
                     <div class="platform-card bili"><i class="fas fa-heart platform-icon"></i><div class="platform-name">B站</div></div>
                     <div class="platform-card sohu"><i class="fas fa-globe platform-icon"></i><div class="platform-name">搜狐视频</div></div>
                     <div class="platform-card migu"><i class="fas fa-music platform-icon"></i><div class="platform-name">咪咕视频</div></div>
-                    <div class="platform-card xigua"><i class="fas fa-watermelon platform-icon"></i><div class="platform-name">西瓜视频</div></div>
+                    <div class="platform-card xigua"><i class="fas fa-play-square platform-icon"></i><div class="platform-name">西瓜视频</div></div>
                 </div>
             </div>
         </div>
 
-        <!-- 常见问题区 -->
         <div class="section" id="faq">
             <h2 class="section-title">常见问题</h2>
             <div class="faq-list">
@@ -1036,8 +985,8 @@
                         <span>为什么解析失败？</span>
                         <span class="faq-arrow">▼</span>
                     </div>
-                    <div class="faq-answer show"> <!-- 默认展开第一个 -->
-                        解析失败大概率是当前接口失效，可尝试切换其他解析接口；同时检查视频链接是否为官方有效播放链接，部分付费独播/版权保护视频暂不支持解析。
+                    <div class="faq-answer show">
+                        解析失败主要有3种原因：1. 当前解析接口因平台限制临时失效，可切换其他接口重试；2. 视频链接非官方有效播放链接，需重新复制平台原生播放链接；3. 视频为平台付费独播/版权保护内容，暂不支持解析。建议优先尝试切换多个接口，仍失败则为内容版权限制。
                     </div>
                 </div>
                 <div class="faq-item">
@@ -1046,7 +995,7 @@
                         <span class="faq-arrow">▼</span>
                     </div>
                     <div class="faq-answer">
-                        手机端播放时，需先关闭手机的「竖排方向锁定」功能，点击视频播放界面的全屏按钮，即可实现横屏全屏播放，部分浏览器需开启视频全屏权限。
+                        手机端需先关闭「竖排方向锁定」功能，再点击视频播放界面的全屏按钮即可横屏播放；若仍无法全屏，需检查浏览器权限，关闭浏览器的「视频播放限制」，或更换Chrome、Edge等主流浏览器重试。
                     </div>
                 </div>
                 <div class="faq-item">
@@ -1055,7 +1004,7 @@
                         <span class="faq-arrow">▼</span>
                     </div>
                     <div class="faq-answer">
-                        部分浏览器/手机系统会限制剪贴板权限，可手动将链接复制到输入框；同时确保剪贴板中有有效的视频链接，无内容时粘贴按钮也会提示失败，建议更新浏览器后重试。
+                        粘贴按钮失效是因为浏览器/手机系统限制了剪贴板权限，可手动将链接复制到输入框使用；同时确保剪贴板中仅有视频链接，无其他冗余内容，部分国产浏览器需在设置中开启「网站剪贴板权限」。
                     </div>
                 </div>
                 <div class="faq-item">
@@ -1064,22 +1013,66 @@
                         <span class="faq-arrow">▼</span>
                     </div>
                     <div class="faq-answer">
-                        在解析页的「历史播放记录」板块，可单条删除历史记录，也可点击「清空全部记录」删除所有历史，记录保存在本地浏览器，不会上传至服务器，清除浏览器缓存会同步删除历史。
+                        在解析页「历史播放记录」板块，单条记录右侧有删除按钮可单独删除，也可点击「清空全部记录」删除所有历史；播放记录仅保存在本地浏览器缓存，不会上传服务器，清除浏览器缓存会同步删除历史记录。
                     </div>
                 </div>
                 <div class="faq-item">
                     <div class="faq-question" onclick="toggleFaq(this)">
-                        <span>是否需要注册登录？</span>
+                        <span>是否需要注册登录才能使用？</span>
                         <span class="faq-arrow">▼</span>
                     </div>
                     <div class="faq-answer">
-                        幻映星球全程无需注册、无需登录，打开页面即可使用，所有操作均在本地浏览器完成，不会收集任何个人信息、设备信息及播放记录，保障隐私安全。
+                        幻映星球全程无需注册、无需登录，打开页面即可直接使用；所有操作均在本地浏览器完成，不会收集任何个人信息、设备信息、播放记录及链接信息，完全保障你的隐私安全。
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>解析后视频播放卡顿、加载慢？</span>
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        视频卡顿与网络环境和解析接口有关：1. 切换至更稳定的网络（如WiFi），避免移动数据弱网环境；2. 暂停视频等待10-20秒让视频缓存，再继续播放；3. 切换其他解析接口，不同接口的播放节点速度不同。
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>是否支持视频下载/缓存到本地？</span>
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        目前暂不支持视频下载和本地缓存功能，仅支持在线播放；因受平台版权保护和网络安全限制，为避免侵权问题，工具未开发下载相关功能，后续会根据政策调整考虑是否上线。
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>一个视频链接可以在多设备使用吗？</span>
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        可以的，同一个官方视频链接，可在不同设备（手机、电脑、平板）的幻映星球解析页分别解析播放，无设备数量限制；但解析后的播放链接为临时链接，仅可当前设备使用，无法跨设备分享。
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>解析后的视频有画质选择吗？</span>
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        解析后的视频画质与原平台视频画质一致，部分解析接口支持标清/高清/4K画质切换，具体以播放界面的画质选项为准；若原平台视频为付费高清画质，解析后仅能观看免费标清画质，受平台版权限制。
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>工具支持解析短视频、直播内容吗？</span>
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        目前幻映星球主要支持解析各大平台的长视频内容（电影、电视剧、综艺、动漫等），暂不支持解析短视频（如抖音、快手）和实时直播内容；后续版本会逐步适配更多内容类型，具体可关注更新日志。
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- 新增：更新日志板块 -->
         <div class="section" id="log">
             <h2 class="section-title">更新日志</h2>
             <div class="log-list">
@@ -1098,7 +1091,6 @@
             </div>
         </div>
 
-        <!-- 新增：友情链接板块 -->
         <div class="section">
             <h2 class="section-title">友情链接</h2>
             <div class="link-area">
@@ -1111,26 +1103,20 @@
             </div>
         </div>
 
-        <!-- 底部（新增备案、协议、双反馈入口） -->
         <div class="footer">
             <div class="footer-links">
                 <a href="#privacy" class="footer-link">隐私政策</a>
                 <a href="#agreement" class="footer-link">用户协议</a>
-                <a href="https://wj.qq.com/" class="footer-link" target="_blank" rel="noopener noreferrer">表单反馈</a>
-                <a href="sitemap.xml" class="footer-link" target="_blank" rel="noopener noreferrer">站点地图</a>
             </div>
             <p>关注公众号：<strong>幻映星球</strong> 获取最新更新与更多功能</p>
-            <p>问题反馈：<a href="mailto:Yalo329@qq.com" target="_blank" rel="noopener noreferrer">Yalo329@qq.com</a> | <a href="https://wj.qq.com/" target="_blank" rel="noopener noreferrer">腾讯问卷反馈</a></p>
-            <p class="icp">粤ICP备XXXXXXX号-1 <!-- 替换为你的真实ICP备案号 --></p>
+            <p>问题反馈：<a href="mailto:Yalo329@qq.com" target="_blank" rel="noopener noreferrer">Yalo329@qq.com</a></p>
             <p class="copyright">© 2025 幻映星球 All Rights Reserved | 本工具仅用于学习交流，请勿用于商业用途，侵权请联系删除</p>
         </div>
     </div>
 
-    <!-- 新增：回到顶部按钮 -->
     <div class="back-to-top" id="backToTop" onclick="backToTop()"><i class="fas fa-arrow-up"></i></div>
 
     <script>
-        // 全局元素获取
         const loadingBar = document.getElementById('loading-bar');
         const navbar = document.getElementById('navbar');
         const hamburger = document.getElementById('hamburger');
@@ -1140,7 +1126,6 @@
         const rippleContainer = document.getElementById('rippleContainer');
         const goUseBtn = document.querySelector('.go-use-btn');
 
-        // 页面加载进度条
         window.addEventListener('load', () => {
             let progress = 0;
             const timer = setInterval(() => {
@@ -1151,12 +1136,10 @@
                     setTimeout(() => loadingBar.style.display = 'none', 300);
                 }
             }, 50);
-            // 主容器淡入
             document.querySelector('.page-container').style.opacity = 0;
             document.querySelector('.page-container').style.animation = 'fadeInUp 0.8s ease forwards';
         });
 
-        // 导航栏滚动效果
         window.addEventListener('scroll', () => {
             if (window.scrollY > 50) {
                 navbar.classList.add('scroll');
@@ -1167,17 +1150,14 @@
             }
         });
 
-        // 移动端导航开关
         hamburger.addEventListener('click', () => mobileNav.classList.add('show'));
         closeNav.addEventListener('click', () => mobileNav.classList.remove('show'));
         function closeMobileNav() {mobileNav.classList.remove('show');}
 
-        // 回到顶部
         function backToTop() {
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
-        // FAQ折叠展开（默认展开第一个）
         function toggleFaq(el) {
             const answer = el.nextElementSibling;
             const arrow = el.querySelector('.faq-arrow');
@@ -1186,7 +1166,6 @@
             arrow.textContent = answer.classList.contains('show') ? '▲' : '▼';
         }
 
-        // 主按钮点击波纹效果
         goUseBtn.addEventListener('click', (e) => {
             const ripple = document.createElement('div');
             const x = e.clientX - e.target.getBoundingClientRect().left;
@@ -1206,32 +1185,17 @@
             setTimeout(() => ripple.remove(), 600);
         });
 
-        // 禁用右键
         document.addEventListener("contextmenu", (e) => e.preventDefault());
 
-        // 新增：404页面指引（若页面不存在跳转到首页）
         if (window.location.pathname !== '/' && window.location.pathname !== '/index.html') {
             setTimeout(() => {
                 if (confirm('页面不存在，是否跳转到幻映星球首页？')) {
-                    window.location.href = 'https://ming329.me'; // 替换为你的官网域名
+                    window.location.href = 'https://ming329.me';
                 }
             }, 1000);
         }
-
-        // SEO/统计代码插槽（可添加百度/谷歌/CNZZ统计）
-        /* 示例：百度统计
-        var _hmt = _hmt || [];
-        (function() {
-            var hm = document.createElement("script");
-            hm.src = "https://hm.baidu.com/hm.js?你的百度统计ID";
-            var s = document.getElementsByTagName("script")[0];
-            s.parentNode.insertBefore(hm, s);
-        })();
-        */
     </script>
-    <!-- 新增：隐私政策/用户协议极简弹窗（可扩展为独立页面） -->
     <script>
-        // 隐私政策/用户协议弹窗（点击底部链接触发）
         document.querySelectorAll('.footer-link[href="#privacy"]')[0].addEventListener('click', (e) => {
             e.preventDefault();
             alert('【隐私政策】\n1. 本工具不收集任何个人信息、设备信息、播放记录及链接信息，所有操作均在本地浏览器完成；\n2. 播放历史仅保存在本地浏览器缓存，清除缓存会同步删除；\n3. 本工具不向任何第三方泄露任何数据；\n4. 如需修改隐私政策，将在官网提前公示。');
